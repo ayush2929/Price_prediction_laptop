@@ -1,13 +1,13 @@
-/* General body style */
+/* General body style with dark background */
 body {
-    background-color: #0e1117;
-    color: #ffffff;
+    background-color: #0d0d0d;
+    color: #f5f5f5;
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
 }
 
-/* Center header and give spacing */
+/* Centered title */
 h1 {
     color: #fca311;
     text-align: center;
@@ -15,16 +15,22 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Style selectboxes and inputs */
+/* Form container padding */
+.main-container {
+    padding: 2rem 3rem;
+    border-radius: 10px;
+}
+
+/* Input boxes */
 div[data-baseweb="select"], .stNumberInput, .stTextInput {
-    background-color: #1e1e1e;
-    color: #ffffff;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
     border-radius: 6px;
-    border: 1px solid #3e3e3e;
+    border: 1px solid #3e3e3e !important;
     padding: 6px;
 }
 
-/* Remove any blur or shadow */
+/* Remove blur and shadow */
 .css-1v0mbdj, .stSelectbox > div, .stNumberInput > div {
     box-shadow: none !important;
     backdrop-filter: none !important;
@@ -39,6 +45,7 @@ div[data-baseweb="select"], .stNumberInput, .stTextInput {
     border: none;
     border-radius: 8px;
     transition: 0.3s ease;
+    font-size: 16px;
 }
 
 .stButton > button:hover {
@@ -46,15 +53,24 @@ div[data-baseweb="select"], .stNumberInput, .stTextInput {
     cursor: pointer;
 }
 
-/* Success output box */
-.stAlert {
-    background-color: #1f1f1f !important;
+/* Result box styling */
+.result-box {
+    background-color: #1f1f1f;
     border-left: 5px solid #fca311;
-    padding: 10px;
+    padding: 1em;
+    margin-top: 1.5em;
+    border-radius: 8px;
     font-weight: bold;
+    font-size: 18px;
+    color: #ffffff;
 }
 
-/* Make the container fluid width */
+/* Radio buttons */
+.css-1cpxqw2 {
+    color: #ffffff !important;
+}
+
+/* Full width container */
 .css-18e3th9 {
     max-width: 100% !important;
     padding: 2rem 3rem !important;
