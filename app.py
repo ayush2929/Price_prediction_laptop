@@ -2,24 +2,49 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import datetime
+import sqlite3
 
-# Load custom CSS
+# --- UI Styling ---
 with open("styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-# Load custom HTML header
 with open("header.html") as f:
     st.markdown(f.read(), unsafe_allow_html=True)
 
-# Load pipeline and data
+# --- Load Model & Data ---
 with open('pipe.pkl', 'rb') as file1:
     pipe = pickle.load(file1)
 
 data = pd.read_csv("traineddata.csv")
 
-# --- Layout Start ---
-st.markdown("<div class='form-container'>", unsafe_allow_html=True)
+# --- SQLite Setup ---
+conn = sqlite3.connect("predictions.db", check_same_thread=False)
+cursor = conn.cursor()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS predictions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    company TEXT,
+    type TEXT,
+    ram INTEGER,
+    cpu TEXT,
+    hdd INTEGER,
+    ssd INTEGER,
+    os TEXT,
+    gpu TEXT,
+    weight REAL,
+    touchscreen INTEGER,
+    ips INTEGER,
+    screensize REAL,
+    resolution TEXT,
+    ppi REAL,
+    predicted_price INTEGER,
+    predicted_at TEXT
+)
+""")
+conn.commit()
 
+# --- Layout ---
+st.markdown("<div class='form-container'>", unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 
 with col1:
@@ -45,13 +70,12 @@ resolution = st.selectbox('🖼️ Screen Resolution', [
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-# --- Predict Button ---
+# --- Predict & Save ---
 if st.button('🎯 Predict Laptop Price'):
-    touchscreen = 1 if touchscreen == 'Yes' else 0
-    ips = 1 if ips == 'Yes' else 0
+    touchscreen_binary = 1 if touchscreen == 'Yes' else 0
+    ips_binary = 1 if ips == 'Yes' else 0
 
-    X_res = int(resolution.split('x')[0])
-    Y_res = int(resolution.split('x')[1])
+    X_res, Y_res = map(int, resolution.split('x'))
     try:
         ppi = ((X_res**2 + Y_res**2) ** 0.5) / float(screen_size)
     except ZeroDivisionError:
@@ -59,7 +83,7 @@ if st.button('🎯 Predict Laptop Price'):
         st.stop()
 
     query = pd.DataFrame([[
-        company, type, int(ram), float(weight), touchscreen, ips,
+        company, type, int(ram), float(weight), touchscreen_binary, ips_binary,
         float(ppi), cpu, int(hdd), int(ssd), gpu, os
     ]], columns=[
         'Company', 'TypeName', 'Ram', 'Weight', 'TouchScreen',
@@ -73,6 +97,27 @@ if st.button('🎯 Predict Laptop Price'):
     st.success(f"💰 Estimated Laptop Price: ₹{final_price - 1000} - ₹{final_price + 1000}")
     st.markdown("</div>", unsafe_allow_html=True)
 
-# Footer
+    # --- Save to SQLite ---
+    try:
+        cursor.execute("""
+        INSERT INTO predictions (
+            company, type, ram, cpu, hdd, ssd, os, gpu,
+            weight, touchscreen, ips, screensize, resolution,
+            ppi, predicted_price, predicted_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            company, type, ram, cpu, hdd, ssd, os, gpu,
+            weight, touchscreen_binary, ips_binary,
+            screen_size, resolution, round(ppi, 2),
+            final_price, datetime.datetime.now().isoformat()
+        ))
+        conn.commit()
+        st.info("✅ Prediction saved locally in SQLite.")
+    except Exception as e:
+        st.error(f"❌ Error saving to SQLite: {e}")
+
+# --- Footer ---
 with open("footer.html") as f:
     st.markdown(f.read(), unsafe_allow_html=True)
+    
+
