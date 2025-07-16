@@ -1,0 +1,61 @@
+/* General body style */
+body {
+    background-color: #0e1117;
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Center header and give spacing */
+h1 {
+    color: #fca311;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Style selectboxes and inputs */
+div[data-baseweb="select"], .stNumberInput, .stTextInput {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #3e3e3e;
+    padding: 6px;
+}
+
+/* Remove any blur or shadow */
+.css-1v0mbdj, .stSelectbox > div, .stNumberInput > div {
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Button Styling */
+.stButton > button {
+    background-color: #fca311;
+    color: #000;
+    font-weight: bold;
+    padding: 0.5em 2em;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.stButton > button:hover {
+    background-color: #ffb64a;
+    cursor: pointer;
+}
+
+/* Success output box */
+.stAlert {
+    background-color: #1f1f1f !important;
+    border-left: 5px solid #fca311;
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* Make the container fluid width */
+.css-18e3th9 {
+    max-width: 100% !important;
+    padding: 2rem 3rem !important;
+}
