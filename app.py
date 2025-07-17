@@ -2,10 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import joblib
-from tensorflow.keras.models import load_model
 
-# Page config without wide layout
+# Page config
 st.set_page_config(page_title="Laptop Price Predictor")
 
 # Load CSS and Header
@@ -19,9 +17,8 @@ data = pd.read_csv("traineddata.csv")
 
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-# --- Model Selection ---
-st.markdown("### 🔍 Choose Prediction Model")
-model_choice = st.radio("", ["Random Forest", "ANN (Neural Network)"])
+# --- Model Selection (Only Random Forest available) ---
+st.markdown("### 🔍 Using Random Forest Prediction Model")
 
 # --- Input Form Layout ---
 col1, col2 = st.columns(2)
@@ -60,15 +57,9 @@ if st.button("🎯 Predict Laptop Price"):
             'IPS', 'PPI', 'CPU_name', 'HDD', 'SSD', 'Gpu brand', 'OpSys'
         ])
 
-        if model_choice == "Random Forest":
-            pipe = pickle.load(open("pipe.pkl", "rb"))
-            log_price = pipe.predict(input_df)[0]
-            final_price = int(np.exp(log_price))
-        else:
-            model = load_model("ann_model.h5")
-            pipeline = joblib.load("preprocessing_pipeline.pkl")
-            transformed_input = pipeline.transform(input_df)
-            final_price = int(model.predict(transformed_input).flatten()[0])
+        pipe = pickle.load(open("pipe.pkl", "rb"))
+        log_price = pipe.predict(input_df)[0]
+        final_price = int(np.exp(log_price))
 
         st.markdown('<div class="result-box">', unsafe_allow_html=True)
         st.success(f"💰 Estimated Price: ₹{final_price - 1000:,} – ₹{final_price + 1000:,}")
