@@ -1,6 +1,0 @@
-# Ignore SQLite DB and environment files
-predictions.db
-__pycache__/
-*.pyc
-*.pkl
-.env

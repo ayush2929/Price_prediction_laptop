@@ -1,77 +1,68 @@
-/* General body style with dark background */
+/* --- Dark Theme Base --- */
 body {
-    background-color: #0d0d0d;
-    color: #f5f5f5;
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-/* Centered title */
-h1 {
-    color: #fca311;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-/* Form container padding */
-.main-container {
-    padding: 2rem 3rem;
-    border-radius: 10px;
-}
-
-/* Input boxes */
-div[data-baseweb="select"], .stNumberInput, .stTextInput {
-    background-color: #1a1a1a !important;
-    color: #ffffff !important;
-    border-radius: 6px;
-    border: 1px solid #3e3e3e !important;
-    padding: 6px;
-}
-
-/* Remove blur and shadow */
-.css-1v0mbdj, .stSelectbox > div, .stNumberInput > div {
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Button Styling */
-.stButton > button {
-    background-color: #fca311;
-    color: #000;
-    font-weight: bold;
-    padding: 0.5em 2em;
-    border: none;
-    border-radius: 8px;
-    transition: 0.3s ease;
-    font-size: 16px;
-}
-
-.stButton > button:hover {
-    background-color: #ffb64a;
-    cursor: pointer;
-}
-
-/* Result box styling */
-.result-box {
-    background-color: #1f1f1f;
-    border-left: 5px solid #fca311;
-    padding: 1em;
-    margin-top: 1.5em;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 18px;
+    background-color: #121212;
     color: #ffffff;
 }
 
-/* Radio buttons */
-.css-1cpxqw2 {
-    color: #ffffff !important;
+/* --- App Container with Fixed Width --- */
+.stApp {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1c1c1c 100%);
+    color: #ffffff;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
 }
 
-/* Full width container */
-.css-18e3th9 {
-    max-width: 100% !important;
-    padding: 2rem 3rem !important;
+/* --- Buttons --- */
+.stButton>button {
+    background-color: #fca311;
+    color: #000000;
+    border-radius: 12px;
+    padding: 0.6em 1.2em;
+    font-weight: bold;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #ffb64a;
+    color: #000;
+}
+
+/* --- Input boxes --- */
+input, .stNumberInput input {
+    background-color: #262626;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+/* --- Output box --- */
+.output-box {
+    background-color: #1b1b1b;
+    color: #00ffcc;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #00ffcc;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* --- Header and Text Styles --- */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+}
+
+footer, header {
+    color: #ffffff;
+}
+
+/* --- Form Containers --- */
+.form-container {
+    background-color: #191919;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 10px;
 }
